@@ -25,4 +25,26 @@ public class UserContext {
     public static long getTokenRemainingTime(String token) {
         return JwtUtil.getRemainingTime(token);
     }
+
+    // ========== 新增方法 1：调用 JwtUtil.createToken ==========
+    /**
+     * 根据用户ID生成 JWT Token
+     * @param userId 用户ID
+     * @return JWT 字符串
+     */
+    public static String generateToken(Long userId) {
+        return JwtUtil.createToken(userId);
+    }
+
+    // ========== 新增方法 2：调用 JwtUtil.parseToken ==========
+    /**
+     * 解析 JWT Token，返回 Claims 对象
+     * @param token JWT 字符串
+     * @return Claims 对象（包含 userId、过期时间等）
+     */
+    public static Claims parseToken(String token) {
+        return JwtUtil.parseToken(token);
+    }
+
+
 }
