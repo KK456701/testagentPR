@@ -54,4 +54,31 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    // ========== 新增功能 1 ==========
+    /**
+     * 从 JWT Token 中直接提取用户 ID
+     * @param token JWT 字符串
+     * @return 用户 ID
+     */
+    public static Long getUserIdFromToken(String token) {
+        Claims claims = parseToken(token);
+        return claims.get("userId", Long.class);
+    }
+
+    // ========== 新增功能 2 ==========
+    /**
+     * 验证 JWT Token 是否有效（能解析且未过期）
+     * @param token JWT 字符串
+     * @return true-有效，false-无效
+     */
+    public static boolean isTokenValid(String token) {
+        try {
+            Claims claims = parseToken(token);
+            Date expiration = claims.getExpiration();
+            return !expiration.before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
