@@ -1,0 +1,63 @@
+server:
+  port: 8081 # 防止与本机的 8080 冲突
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  messages:
+    encoding: UTF-8
+  application:
+    name: study-room
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/study_room?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456 
+  data:
+    redis:
+      host: 192.168.100.128
+      port: 6379
+      database: 0
+      # password: # 根据本地情况修改
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
+  rabbitmq:
+    host: 192.168.100.128
+    port: 5672
+    username: itheima # 请根据本地实际情况修改
+    password: 123321 # 请根据本地实际情况修改
+    virtual-host: /
+    # 开启发布确认和退回机制
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    template:
+      mandatory: true
+spring.amqp.deserialization.trust.all: true
+
+logging:
+  level:
+    com.study.room: info
+  charset:
+    console: UTF-8
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.study.room.entity
+  global-config:
+    db-config:
+      id-type: auto # 考虑后续不使用雪花算法，可以用自增主键（如果简单）或者雪花算法
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 开发时打印SQL
+
+# 自定义 JWT 配置
+jwt:
+  secret: a9Bf3F0dC2eE6a1bD5fB8eC0a9Bf3F0dC2eE6a1bD5fB8eC0a9Bf3F0dC2eE6a1b
+  expiration: 86400000 # 一天的毫秒数
