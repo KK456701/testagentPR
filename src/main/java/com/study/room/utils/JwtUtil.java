@@ -81,4 +81,21 @@ public class JwtUtil {
             return false;
         }
     }
+
+        // ========== 新增功能 3 ==========
+    /**
+     * 获取 JWT Token 剩余有效时间（毫秒）
+     * @param token JWT 字符串
+     * @return 剩余毫秒数，若 token 无效或已过期则返回 -1
+     */
+    public static long getRemainingTime(String token) {
+        try {
+            Claims claims = parseToken(token);
+            Date expiration = claims.getExpiration();
+            long remaining = expiration.getTime() - System.currentTimeMillis();
+            return remaining > 0 ? remaining : -1;
+        } catch (Exception e) {
+            return -1;
+        }
+    }
 }
