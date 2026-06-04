@@ -42,4 +42,16 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
+    //asdasd5466556
+
+    /**
+     * 解析 JWT Token，获取 Claims
+     */
+    public static Claims parseToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(SECRET_KEY)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 }
